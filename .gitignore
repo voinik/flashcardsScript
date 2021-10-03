@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+
+# production
+/build
+/outputData
+!/outputData/htmlFormattedDefinitions-2021-10-03T23:42:25.993Z.txt
+
+# misc
+.DS_Store
+.env
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
