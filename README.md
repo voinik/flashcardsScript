@@ -2,7 +2,7 @@
 
 I made this project because I had just finished reading the book Dune (awesome book, by the way!), and I kept track of all the words I didn't know yet. I wanted to study the words in this flashcard program called Anki. However that's where the headaches began. It required me to manually get all the definitions of the words from somewhere and then format them into HTML myself. On top of that there were quite a few words (see `inputData/sampleWordList.txt`), so I didn't want to bother doing manual labor. Programming to the rescue!
 
-This project parses all the words (separated by a newline) from the `inputData/wordList.txt` file. It then goes through each word and gets its definition from the Oxford dictionary (https://www.oxfordlearnersdictionaries.com/) API. It proceeds to parse the data and format it into HTML (I tried to emulate the iOS/macOS 'look up' style) before finally appending that data to an output file in the `outputData` folder.
+This project parses all the words (separated by a newline) from the `inputData/wordList.txt` file. It then goes through each word and gets its lemmas from the Oxford dictionary API (https://www.oxfordlearnersdictionaries.com/), in order to get all forms of the root of the provided word ('swimming' returns both 'swimming' and 'swim'). It filters all duplicate lemmas and then goes though each lemma and gets its definition from the Oxford dictionary  API. It proceeds to parse the data and format it into HTML (I tried to emulate the iOS/macOS 'look up' style) before finally appending that data to an output file in the `outputData` folder.
 
 ## How to run it
 * First you need Node, preferably v12.22.5.
@@ -27,5 +27,8 @@ If you need to make this styling work with any existing styling, then you'll nee
 
 ## Dictionary use
 This program uses the en-us dictionary. If you wish to use the gb one, change it in the url on line 61 of `src/prepWordListForAnki.ts`, and rerun the program.
+
+## Rate limitations
+The free tier of the Oxford dictionary allows only 60 hits per minute. That means you'll have to limit your wordlist to +- 20 entries when running the program, considering each word requires 1 request to get the lemmas, and then 1 request per non-duplicate lemma. After a minute you can then load the next +- 20 words, etc.
 
 Enoy :)

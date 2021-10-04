@@ -1,22 +1,18 @@
 import { LexicalCategory } from "./enums";
-import { ILexicalEntry, IOxfordData, IResult, ISense } from "./interfaces";
+import { IDefinitionLexicalEntry, IOxfordDefinitionData, IDefinitionResult, IDefinitionSense } from "./interfaces";
 
-export function formatOxfordData(data: IOxfordData) {
+export function formatOxfordDefinitionData(data: IOxfordDefinitionData) {
     let definitionResult = '';
-    definitionResult += getStartOrEndQuote(definitionResult);
-
-    for (let i = 0; i < data.results.length; i++) {
+    const resultsLength = data.results.length;
+    for (let i = 0; i < resultsLength; i++) {
         const result = data.results[i];
-
-        definitionResult += getTitleLine(result, i);
+        definitionResult += getTitleLine(result, i, resultsLength);
         definitionResult += getDefinitions(result);
     }
-
-    definitionResult += getStartOrEndQuote(definitionResult);
     return definitionResult;
 }
 
-function getPhoneticSpelling(result: IResult) {
+function getPhoneticSpelling(result: IDefinitionResult) {
     let phoneticSpelling = '';
     if (!result.lexicalEntries[0].entries[0].pronunciations) {
         return '';
@@ -34,16 +30,13 @@ function getPhoneticSpelling(result: IResult) {
     return phoneticSpelling;
 }
 
-function getStartOrEndQuote(definitionResult: string) {
-    return '"';
-}
-
-function getTitleLine(result: IResult, index: number) {
+function getTitleLine(result: IDefinitionResult, index: number, totalLength: number) {
+    const superfix = totalLength > 1 ? index + 1 : '';
     const phoneticSpelling = getPhoneticSpelling(result);
-    return `<div class='rowContainer word'><h2 class='black'>${result.word}<sup>${index + 1}</sup></h2><h3 class='grey bold phoneticText'>&nbsp;|${phoneticSpelling}|</h3></div>`;
+    return `<div class='rowContainer word'><h2 class='black'>${result.word}<sup>${superfix}</sup></h2><h3 class='grey bold phoneticText'>&nbsp;|${phoneticSpelling}|</h3></div>`;
 }
 
-function getDefinitions(result: IResult) {
+function getDefinitions(result: IDefinitionResult) {
     const blackList = [LexicalCategory.residual, LexicalCategory.other];
     let definitions = "<div class='lexicalEntries'>";
     for (const lexEntry of result.lexicalEntries) {
@@ -60,7 +53,7 @@ function getDefinitions(result: IResult) {
     return definitions;
 }
 
-function getLexicalCategoryDefinitions(lexicalEntry: ILexicalEntry) {
+function getLexicalCategoryDefinitions(lexicalEntry: IDefinitionLexicalEntry) {
     let lexicalCategoryDefinitions = '';
     for (const entry of lexicalEntry.entries) {
         const numSenses = entry.senses.length;
@@ -78,7 +71,7 @@ function getLexicalCategoryDefinitions(lexicalEntry: ILexicalEntry) {
     return lexicalCategoryDefinitions;
 }
 
-function getDomainsAndRegisters(sense: ISense) {
+function getDomainsAndRegisters(sense: IDefinitionSense) {
     if (!sense.domains && !sense.registers) {
         return '';
     }
@@ -102,7 +95,7 @@ function getDomainsAndRegisters(sense: ISense) {
     return result;
 }
 
-function getExamples(sense: ISense) {
+function getExamples(sense: IDefinitionSense) {
     if (!sense.examples) {
         return '';
     }
@@ -120,7 +113,7 @@ function getExamples(sense: ISense) {
     return ': ' + examples.join(' | ');
 }
 
-function getSubsenses(sense: ISense) {
+function getSubsenses(sense: IDefinitionSense) {
     let text = '';
     if (!sense.subsenses) {
         return text;

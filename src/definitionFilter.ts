@@ -1,6 +1,9 @@
-import { IOxfordData } from "./interfaces";
+import { IOxfordDefinitionData } from "./interfaces";
 
-export function filterOxfordData(data: IOxfordData) {
+export function filterOxfordDefinitionData(data: IOxfordDefinitionData) {
+    if (data.results.length < 1) {
+        return data;
+    } 
     const filteredData = { ...data };
     for (let i = 0; i < filteredData.results.length; i++) {
         filteredData.results[i].lexicalEntries =

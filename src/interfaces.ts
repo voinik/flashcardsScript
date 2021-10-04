@@ -1,50 +1,66 @@
 import { LexicalCategory } from "./enums";
 
-export interface IOxfordData {
-    results: IResult[];
+export interface IOxfordLemmaData {
+    results: ILemmaResult[];
+}
+
+interface ILemmaResult {
+    id: string;
+    language: string;
+    lexicalEntries: ILemmaLexicalEntries[];
+}
+
+interface ILemmaLexicalEntries {
+    grammaticalFeatures: {id: string; type: string}[];
+    inflectionOf: {id: string; text: string}[];
+    lexicalCategory: { id: LexicalCategory};
+}
+
+export interface IOxfordDefinitionData {
+    results: IDefinitionResult[];
     word: string;
 }
 
-export interface IResult {
+export interface IDefinitionResult {
     id: string;
     language: string;
-    lexicalEntries: ILexicalEntry[];
+    lexicalEntries: IDefinitionLexicalEntry[];
     type: string;
     word: string;
 }
 
-export interface ILexicalEntry {
-    entries: IEntry[];
+export interface IDefinitionLexicalEntry {
+    entries: IDefinitionEntry[];
     language: string;
-    lexicalCategory: ILexicalCategory;
+    lexicalCategory: IDefinitionLexicalCategory;
     text: string;
 }
 
-interface IEntry {
+interface IDefinitionEntry {
     pronunciations?: { phoneticSpelling: string; audioFile?: string }[];
-    senses: ISense[];
+    senses: IDefinitionSense[];
 }
 
-export interface ISense extends ISubsense {
-    subsenses?: ISubsense[];
+export interface IDefinitionSense extends IDefinitionSubsense {
+    subsenses?: IDefinitionSubsense[];
 }
 
-interface ISubsense {
+interface IDefinitionSubsense {
     definitions: string[];
-    examples?: IExample[];
+    examples?: IDefinitionExample[];
     registers?: { id: string }[];
     domains?: { text: string }[];
     id: string;
 }
 
-interface IExample {
+interface IDefinitionExample {
     text: string;
     registers?: {
         id: string;
     }[];
 }
 
-interface ILexicalCategory {
+interface IDefinitionLexicalCategory {
     id: LexicalCategory;
     text: string;
 }
