@@ -29,6 +29,10 @@ If you need to make this styling work with any existing styling, then you'll nee
 This program uses the en-us dictionary. If you wish to use the gb one, change it in the url on line 61 of `src/prepWordListForAnki.ts`, and rerun the program.
 
 ## Rate limitations
-The free tier of the Oxford dictionary allows only 60 hits per minute. That means you'll have to limit your wordlist to +- 20 entries when running the program, considering each word requires 1 request to get the lemmas, and then 1 request per non-duplicate lemma. After a minute you can then load the next +- 20 words, etc.
+The free tier of the Oxford dictionary allows only 60 requests per minute. That means we would have to limit our wordlist to +- 20 entries when running the program, considering each word requires 1 request to get the lemmas, and then 1 request per non-duplicate lemma. But because we don't like extra effort, there is a circumventable 2s timeout after every definition request in order to stay within the limits.
+
+Be prepared to let your computer run a while. On my laptop it took 21 minutes to run the program for 421 words.
+
+If you prefer not to wait 2s before each definition request, perhaps because you have a small word list, then set `SKIP_DEFINITION_TIMEOUT=true`, in your `.env`. Once it finishes you can load the next +- 20 words, etc. a minute later. If you're a big shot and you've got a paid plan without limitations, then by all means throw in all your words and get your results fast!
 
 Enoy :)

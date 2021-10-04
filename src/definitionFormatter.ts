@@ -115,11 +115,14 @@ function getExamples(sense: IDefinitionSense) {
 
 function getSubsenses(sense: IDefinitionSense) {
     let text = '';
-    if (!sense.subsenses) {
+    if (!sense.subsenses || sense.subsenses.length < 1) {
         return text;
     }
 
     for (const subsense of sense.subsenses) {
+        if (!subsense.definitions || subsense.definitions.length < 1) {
+            continue;
+        }
         const definition = subsense.definitions[0].replace(/\.$/, '');
         text += "<div class='rowContainer'>";
         text += "<p><em class='grey'>&bull;</em>&nbsp;";

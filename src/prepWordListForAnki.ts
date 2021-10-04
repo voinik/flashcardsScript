@@ -42,7 +42,7 @@ async function start() {
             appendWithoutDefinition(word, resultFilePath);
             continue;
         }
-        
+
         let formattedData = '"';
         for (const lemmaLexicalEntry of filteredData.results[0].lexicalEntries) {
             formattedData += "<div class='lemmaContainer'>";
@@ -65,7 +65,7 @@ async function start() {
 async function getWordList() {
     const wordList = await fsReadFile(inputWordListPath, 'utf-8');
     const arr = wordList.split('\n').filter(i => i !== '').map(i => i.toLocaleLowerCase());
-    return arr;
+    return [...new Set(arr)];
 }
 
 async function getWordData(wordId: string) {
@@ -129,13 +129,18 @@ async function appendWithoutDefinition(word: string, resultFilePath: string) {
 
 async function getLemmaDefinitionAndFormat(lemma: string) {
     let definitionJsonResult;
+
+    if (process.env.SKIP_DEFINITION_TIMEOUT !== 'true') {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+
     try {
         definitionJsonResult = await getWordData(lemma);
     } catch (e: any) {
         console.error(`Failed to get word ${lemma} from API: ${e}\n Skipping to next word...`);
         return '';
     }
-    
+
     const filteredData = filterOxfordDefinitionData(definitionJsonResult);
     if (!filteredData.results) {
         console.error(`Could not find definition for ${lemma}`);
