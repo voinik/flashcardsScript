@@ -1,0 +1,59 @@
+.card {
+  font-family: arial;
+  font-size: 20px;
+  color: black;
+  background-color: white;
+  margin: 2em 5em;
+  max-width: 700px;
+}
+
+h1,h2,h3,h4,h5,p,ul,li {
+    margin: 0;
+}
+
+.black {
+  color: black;
+}
+
+.grey {
+  color: grey;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.phoneticText {
+    margin-top: 7px;
+}
+
+.word {
+    margin-bottom: 1em;
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.definitionContainer {
+    margin: 1em;
+}
+
+.senseContainer {
+    margin-bottom: 1em;
+}
+
+.senseAndSubsenseContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.lexicalCategory {
+    margin-top: 1em;
+}
+
+.lexicalEntries {
+    margin-bottom: 1.5em;
+}
