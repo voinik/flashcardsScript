@@ -1,5 +1,8 @@
 # Get Word Definitions in iOS-like HTML (cool for Anki/flashcards)
 
+This program takes a list of words, looks up their definitions in the Oxford dictionary API, formats the resulting data into HTML that looks like the iOS 'look up' feature, and saves it to an output file. This file can then be imported into a flashcard program that supports HTML/CSS like Anki.
+
+## Why and how?
 I made this project because I had just finished reading the book Dune (awesome book, by the way!), and I kept track of all the words I didn't know yet. I wanted to study the words in this flashcard program called Anki. However that's where the headaches began. It required me to manually get all the definitions of the words from somewhere and then format them into HTML myself. On top of that there were quite a few words (see `inputData/sampleWordList.txt`), so I didn't want to bother doing manual labor. Programming to the rescue!
 
 This project parses all the words (separated by a newline) from the `inputData/wordList.txt` file. It then goes through each word and gets its lemmas from the Oxford dictionary API (https://www.oxfordlearnersdictionaries.com/), in order to get all forms of the root of the provided word ('swimming' returns both 'swimming' and 'swim'). It filters all duplicate lemmas and then goes though each lemma and gets its definition from the Oxford dictionary  API. It proceeds to parse the data and format it into HTML (I tried to emulate the iOS/macOS 'look up' style) before finally appending that data to an output file in the `outputData` folder.
