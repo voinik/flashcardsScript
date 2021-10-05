@@ -1,10 +1,18 @@
 # dependencies
 /node_modules
 
-# production
+# build
 /build
-/outputData
-!/outputData/htmlFormattedDefinitions-2021-10-03T23:42:25.993Z.txt
+
+#inputData
+/inputData/*
+!*/inputData/sampleWordList.txt
+!*/inputData/wordList.txt
+
+# outputData
+/outputData/*
+!*/exampleHtmlFormattedDefinitions-2021-10-03T23:42:25.993Z.txt
+
 
 # misc
 .DS_Store
